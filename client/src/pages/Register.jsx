@@ -1,15 +1,37 @@
+import { useState,useEffect } from 'react'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 import Logo from "../assets/logoo.svg"
+import { ToastContainer, toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 function Register() {
+  const [values,setValues]=useState({
+    username: "",
+    email: "",
+    passord: "",
+    confirmPassword: ""
+  })
   const handleSubmit = (e)=>{
     e.preventDefault();
-    alert("form")
+    handleValidation()
+  }
+  const handleValidation = ()=>{
+    const {username,email,passord,confirmPassword} = values;
+    if(passord!==confirmPassword){
+      toast.error("password and confirm password not match",{
+        position: "bottom-right",
+        autoClose:8000,
+        pauseOnHover: true,
+        draggable:true,
+        theme: "dark"
+      })
+    }
   }
   const handleChange = (e)=>{
-
+          setValues({...values, [e.target.name]:e.target.value })
   }
   return (
+    
     <>
     <FormContainer>
       <form  onSubmit={(e)=> handleSubmit(e)}>
@@ -25,6 +47,7 @@ function Register() {
         <span>Vous avez deja un compte ? <Link to="/login">Login</Link> </span>
       </form>
     </FormContainer>
+    <ToastContainer />
     </>
   )
 }
@@ -37,14 +60,14 @@ flex-direction:column;
 justify-content:center;
 gap:1rem;
 align-items:center;
-background-color:#131324;
+background-color:#909EC1;
   .brand{
     display:flex;
     align-items:center;
     gap:1rem;
     justify-content:center;
     img{
-      height:5rem;
+      height:2.5rem;
 
     }
     h1{
@@ -75,14 +98,26 @@ background-color:#131324;
     button {
       background-color:#997af0;
       color:white;
-      padding: 1rem 2rem
+      padding: 0.5rem 1rem
       border:none;
-      border-radius:0.4rem;
+      border-radius: 0.4rem;
       cursor:pointer;
       font-size:1rem;
-
+      height:25px;
+      transition:0.5s ease-in-out;
+      &:hover {
+        background-color:#4e0eff;
+      }
     }
 
+    span {
+      color:white;
+      a{
+        color:#4e0eff;
+        text-decoration:none;
+        font-weight:bold;
+      }
+    }
 
 }
 `
