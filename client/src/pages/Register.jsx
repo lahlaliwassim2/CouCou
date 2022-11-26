@@ -4,28 +4,38 @@ import styled from 'styled-components'
 import Logo from "../assets/logoo.svg"
 import { ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios'
 function Register() {
   const [values,setValues]=useState({
     username: "",
     email: "",
-    passord: "",
+    password: "",
     confirmPassword: ""
   })
+  const toastoptions = {
+    position: "bottom-right",
+    autoClose:8000,
+    pauseOnHover: true,
+    draggable:true,
+    theme: "dark"
+  }
   const handleSubmit = (e)=>{
     e.preventDefault();
     handleValidation()
   }
   const handleValidation = ()=>{
-    const {username,email,passord,confirmPassword} = values;
-    if(passord!==confirmPassword){
-      toast.error("password and confirm password not match",{
-        position: "bottom-right",
-        autoClose:8000,
-        pauseOnHover: true,
-        draggable:true,
-        theme: "dark"
-      })
+    const {username,email,password,confirmPassword} = values;
+    if(password!==confirmPassword){
+      toast.error("veiller verifier votre mot de passe",toastoptions)
+      return false
+    }else if (username.length < 3){
+      toast.error("entrer un nom valable",toastoptions)
+      return false
+    }else if(email ===""){
+      toast.error("entrer votre email",toastoptions)
+      return false
     }
+    return true
   }
   const handleChange = (e)=>{
           setValues({...values, [e.target.name]:e.target.value })
