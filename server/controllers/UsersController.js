@@ -26,3 +26,21 @@ module.exports.register = async(req,res,next) =>{
         next(error)
     }
 }
+module.exports.login = async(req,res,next) =>{
+
+    try {
+        const {username,password} = req.body
+        const user = await User.findById({ username })
+        if(!user){
+            return res.json({msg:"incorect nom ou mot de passe",status:false})
+        }
+        const isPasswordValid = await brcrypt.compare(password,user.password)
+        if(!isPasswordValid){
+            return res.json({msg:"incorect mot de passe",status:false})
+        }
+        delete user.password
+        return res.json({status:true, user})
+    } catch (error) {
+        next(error)
+    }
+}
