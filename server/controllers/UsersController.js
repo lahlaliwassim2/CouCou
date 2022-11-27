@@ -18,7 +18,7 @@ module.exports.register = async(req,res,next) =>{
         const user = await User.create({
             username,
             email,
-            password
+            password:hashPassword
         })
         delete user.password
         return res.json({status:true, user})
