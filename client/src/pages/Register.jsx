@@ -22,9 +22,14 @@ function Register() {
     draggable:true,
     theme: "dark"
   }
+  useEffect(()=>{
+    if(localStorage.getItem('chat-app-user')){
+      navigate('/')
+    }
+  },[])
   const handleSubmit = async (e)=>{
     e.preventDefault();
-    if( handleValidation()){
+    if(handleValidation()){
       const {username,email,password,confirmPassword} = values;
       const { data } = await axios.post(registerRoute,{
         username,
