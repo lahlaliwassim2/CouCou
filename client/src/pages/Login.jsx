@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
-import { registerRoute } from '../utils/APIRoutes'
+import { loginRoute } from '../utils/APIRoutes'
 function Login() {
   const navigate = useNavigate()
   const [values,setValues]=useState({
@@ -21,11 +21,16 @@ function Login() {
     draggable:true,
     theme: "dark"
   }
+  useEffect(()=>{
+      if(localStorage.getItem('chat-app-user')){
+        navigate('/')
+      }
+  },[])
   const handleSubmit = async (e)=>{
     e.preventDefault();
-    if( handleValidation()){
+    if(handleValidation()){
       const {username,password} = values;
-      const { data } = await axios.post(registerRoute,{
+      const { data } = await axios.post(loginRoute,{
         username,
         password
       })
@@ -34,13 +39,14 @@ function Login() {
       }
       if(data.status === true){
         localStorage.setItem("chat-app-user",JSON.stringify(data.user))
+        navigate('/')
       }
-      navigate('/')
+      
     }
   }
   const handleValidation = ()=>{
     const {username,password} = values;
-    if (username.length < 3){
+    if (username.length === ""){
       toast.error("entrer un nom valable",toastoptions)
       return false
     }else if(password ===""){
