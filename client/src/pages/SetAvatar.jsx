@@ -22,7 +22,14 @@ export default function SetAvatar() {
       draggable:true,
       theme: "dark"
     };
-    const setProfilPicture = async ()=>{};
+    const setProfilPicture = async ()=>{
+
+      if(selectedtAvatar === undefined){
+        toast.error("choix de avatar obligatoire",toastoptions)
+      }else{
+        navigate('/')
+      }
+    };
     useEffect (()=>{
       const loadData = async () => {
       const data = []
@@ -42,7 +49,7 @@ export default function SetAvatar() {
     <>
  <Container>
           <div className="title-container">
-            <h1>Pick an Avatar as your profile picture</h1>
+            <h1>choisissez votre avatar </h1>
           </div>
           <div className="avatars">
             {avatars.map((avatar, index) => {
@@ -62,9 +69,9 @@ export default function SetAvatar() {
               );
             })}
           </div>
-          {/* <button onClick={} className="submit-btn"> */}
-            {/* Set as Profile Picture */}
-          {/* </button> */}
+          <button onClick={setProfilPicture} className="submit-btn"> 
+              Commencer
+          </button> 
           <ToastContainer />
         </Container>
       <ToastContainer />
