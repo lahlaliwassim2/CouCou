@@ -1,0 +1,35 @@
+/* body{
+display: flex;
+justify-content: center;
+background-color:#131325;
+align-items: center;
+flex-direction: colomn;
+gap:3rem;
+width: 100vw;
+height: 100vh;
+}
+.loader {
+  max-inline-size: 100%;
+}
+h1{
+    color: antiquewhite;
+}
+.avatars{
+  display: flex;
+  gap: 2rem;
+}
+  .avatar{
+    border:0.4rem solid transparent;
+}
+    img{
+      height : 6rem;
+    
+  }
+  img::selection {
+    background-color: cyan;
+  }
+    
+
+
+
+ */
