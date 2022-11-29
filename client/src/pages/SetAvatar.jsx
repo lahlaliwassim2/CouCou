@@ -47,6 +47,11 @@ export default function SetAvatar() {
     },[]) 
   return (
     <>
+    {
+      isLoading ? <Container>
+        <img src={loader} alt="chargement de page" className='load' />
+      </Container> : (
+    
  <Container>
           <div className="title-container">
             <h1>choisissez votre avatar </h1>
@@ -74,6 +79,7 @@ export default function SetAvatar() {
           </button> 
           <ToastContainer />
         </Container>
+       ) }
       <ToastContainer />
     </>
     
@@ -85,7 +91,7 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 3rem;
-  background-color: #131324;
+  background-color: #000;
   height: 100vh;
   width: 100vw;
   .loader {
