@@ -22,18 +22,33 @@ export default function SetAvatar() {
       draggable:true,
       theme: "dark"
     };
+    useEffect( ()=>{
+      if(!localStorage.getItem("chat-app-user")){
+        navigate('/login')
+      }
+    },[])
     const setProfilPicture = async ()=>{
-
       if(selectedtAvatar === undefined){
         toast.error("choix de avatar obligatoire",toastoptions)
       }else{
-        navigate('/')
+        const user = await JSON.parse(localStorage.getItem("chat-app-user"));
+        const {data} = await axios.post(`${setAvatarRoute}/${user._id}`,{
+          image : avatars[selectedtAvatar]
+        })
+        if(data.isSet) {
+          user.isAvatarImageSet = true;
+          user.avatarImage = data.image;
+          localStorage.setItem("chat-app-user",JSON.stringify(user))
+          navigate('/')
+        }else{
+          toast.error('erreur d chargement de avatar . ',toastoptions)
+        }
       }
     };
     useEffect (()=>{
       const loadData = async () => {
       const data = []
-      for(let i = 0; i < 4; i++){
+      for(let i = 0; i < 5; i++){
         const image = await  axios.get(
           `${api}/${Math.round(Math.random() * 1000)}`
           )
