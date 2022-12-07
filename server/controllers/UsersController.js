@@ -8,7 +8,7 @@ module.exports.register = async(req,res,next) =>{
         const {username,email,password} = req.body
         const usernameCheck = await User.findOne({ username })
         if(usernameCheck){
-            return res.json({msg : "nom dejas existe ", status: false})
+            return res.json({msg : "nom dejas existe", status: false})
         }
         const emailCheck = await User.findOne({ email })
         if(emailCheck){
@@ -41,6 +41,21 @@ module.exports.login = async(req,res,next) =>{
         }
         delete user.password
         return res.json({status:true, user})
+    } catch (error) {
+        next(error)
+    }
+}
+module.exports.setAvatar = async(req,res,next)=>{
+    try {
+        const userId = req.params.id;
+        const avatarImage = req.body.image;
+        const userData = await User.findByIdAndUpdate(userId,{
+            isAvatarImageSet:true,
+            avatarImage
+        });
+        return res.json({isSet: userData.isAvatarImageSet,
+                         image: userData.avatarImage
+                        })
     } catch (error) {
         next(error)
     }
