@@ -59,6 +59,7 @@ module.exports.setAvatar = async(req,res,next)=>{
     } catch (error) {
         next(error)
     }
+
 }
 module.exports.allusers = async(req,res,next)=>{
     try {
@@ -74,4 +75,5 @@ module.exports.allusers = async(req,res,next)=>{
     } catch (error) {
      next(error)   
     }
+
 }
